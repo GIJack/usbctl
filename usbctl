@@ -34,6 +34,7 @@ COMMANDS:
   temporary, temp, tmp  -- temporarily disable protection (default ${TEMPORARY_WAIT} sec)
   check                 -- exit with 1 if usb is unprotected
   status                -- print current protection status
+  terse                 -- Like status, but terse, suitable for scripts
   list, ls              -- list currently connected usb devices
   log                   -- display usb events in the kernel ring buffer
   version               -- display version information and exit
@@ -55,11 +56,22 @@ usb_protected() {
   sysctl -n "${SYSCTL_VAR}"|grep -q 1
 }
 
+usb_status_terse() {
+  if usb_protected; then
+    echo "PROTECTED"
+   else
+    echo "UNPROTECTED"
+  fi
+}
+
 usb_status() {
   if usb_protected; then
-    echo "${BRIGHT_GREEN}PROTECTED${NO_COLOR}"
+    echo
+    echo "USB Status is ${BRIGHT_GREEN}PROTECTED${NO_COLOR}"
+    echo "New USB devices will be ignored!"
    else
-    echo "${BRIGHT_RED}UNPROTECTED${NO_COLOR}"
+    echo "USB Status is ${BRIGHT_RED}UNPROTECTED${NO_COLOR}"
+    echo "You may now plug in new USB devices."
   fi
 }
 
@@ -116,6 +128,9 @@ case "$1" in
     ;;
   status)
     usb_status
+    ;;
+  terse)
+    usb_status_terse
     ;;
   list|ls)
     usb_list

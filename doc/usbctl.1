@@ -1,7 +1,7 @@
 
 .TH "USBCTL" "1" "07/24/2018" "" "usbctl manual"
 .SH "NAME"
-usbctl \- Linux-hardened deny_new_usb control
+usbctl \- Linux-hardened deny_new_usb control (forked version)
 .SH "SYNOPSIS"
 \fBusbctl\fR \fI[COMMAND]\fR
 .SH "DESCRIPTION"
@@ -30,9 +30,14 @@ exit with 1 if usb is unprotected
 .PP 
 \fIstatus\fR
 .RS 4
-print current protection status
+print current protection status, verbose
 .RE
-.PP 
+.PP
+\fIterse\fR
+.RS 4
+print current protection status, terse, for scripting
+.RE
+.PP  
 \fIlist\fR, \fIls\fR
 .RS 4
 list currently connected usb devices
@@ -48,14 +53,18 @@ display usb events in the kernel ring buffer
 display version information and exit
 .RE
 .SH "VERSION"
-1.3-dev
+2.0
 .SH "HOMEPAGE"
 https://github.com/anthraxx/usbctl
 .RE
 
 Please report bugs and feature requests in the issue tracker.
 .RE
-.SH "AUTHORS"
+.SH "AUTHOR"
+GI Jack
+.RE
+
+.SH "UPSTREAM"
 Levente Polyak
 .RE
 kpcyrd

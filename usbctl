@@ -9,18 +9,16 @@ OLD_DEVICES=
 TEMPORARY_WAIT=60
 SUDO="sudo"
 
-BRIGHT_RED=$(tput setaf 1;tput bold)
-BRIGHT_GREEN=$(tput setaf 2;tput bold)
-NOCOLOR=$(tput sgr0)
-SELF_NAME=$(basename "$0")
+BRIGHT_RED=$(/usr/bin/tput setaf 1;tput bold)
+BRIGHT_GREEN=$(/usr/bin/tput setaf 2;tput bold)
+NOCOLOR=$(/usr/bin/tput sgr0)
+SELF_NAME=$(/usr/bin/basename "$0")
 
-which pkexec &> /dev/null
+/usr/bin/which pkexec &> /dev/null
 PK_EXISTS=${?}
 
 if [[ ${EUID} -eq 0 ]]; then
   SUDO=""
- #elif [ ${PK_EXISTS} -eq 0 ];then # This will come later
- # SUDO="pkexec"
 fi
 
 usage() {
@@ -48,12 +46,12 @@ version() {
 }
 
 deny_new_usb() {
-  ${SUDO} sysctl -q "${SYSCTL_VAR}=${1}"
+  ${SUDO} /usr/bin/sysctl -q "${SYSCTL_VAR}=${1}"
   usb_status
 }
 
 usb_protected() {
-  sysctl -n "${SYSCTL_VAR}"|grep -q 1
+  /usr/bin/sysctl -n "${SYSCTL_VAR}"|grep -q 1
 }
 
 usb_status_terse() {
@@ -76,7 +74,7 @@ usb_status() {
 }
 
 usb_list() {
-  lsusb -t
+  /usr/bin/lsusb -t
 }
 
 temporary() {
@@ -107,7 +105,7 @@ diff_usb_list() {
 
 usb_log() {
   DMESG=dmesg
-  if sysctl -n kernel.dmesg_restrict | grep -q 1; then
+  if /usr/bin/sysctl -n kernel.dmesg_restrict | grep -q 1; then
     DMESG="${SUDO} ${DMESG}"
   fi
   ${DMESG} --color="${USBCTL_LOG_COLOR:-always}" --ctime|grep -i usb --color="${USBCTL_GREP_COLOR:-never}"

@@ -63,8 +63,8 @@ usb_status_terse() {
 }
 
 usb_status() {
-  if usb_protected; then
-    echo
+  echo ""
+   if usb_protected; then
     echo "USB Status is ${BRIGHT_GREEN}PROTECTED${NO_COLOR}"
     echo "New USB devices will be ignored!"
    else

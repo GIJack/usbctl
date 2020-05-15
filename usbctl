@@ -51,7 +51,7 @@ deny_new_usb() {
 }
 
 usb_protected() {
-  /usr/bin/sysctl -n "${SYSCTL_VAR}"|grep -q 1
+  /usr/bin/sysctl -n "${SYSCTL_VAR}"|/usr/bin/grep -q 1
 }
 
 usb_status_terse() {
